@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{lib, ...}: {
   options.aytordev = {
     viAlias = lib.mkOption {
       type = lib.types.bool;

@@ -1,14 +1,11 @@
-{ ... }:
-{
-  perSystem =
-    { pkgs, ... }:
-    {
-      devShells.default = pkgs.mkShell {
-        packages = with pkgs; [
-          just
-          nil
-          alejandra
-        ];
-      };
+{...}: {
+  perSystem = {pkgs, ...}: {
+    devShells.default = pkgs.mkShell {
+      packages = with pkgs; [
+        just
+        nil
+        alejandra
+      ];
     };
+  };
 }

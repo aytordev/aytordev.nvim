@@ -1,8 +1,5 @@
-{ ... }:
-{
-  perSystem =
-    { config, ... }:
-    {
-      checks.build = config.packages.default;
-    };
+{...}: {
+  perSystem = {config, ...}: {
+    checks.build = config.packages.default;
+  };
 }

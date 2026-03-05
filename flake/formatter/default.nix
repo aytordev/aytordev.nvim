@@ -1,11 +1,8 @@
-{ ... }:
-{
-  perSystem =
-    { ... }:
-    {
-      treefmt = {
-        projectRootFile = "flake.nix";
-        programs.alejandra.enable = true;
-      };
+{...}: {
+  perSystem = {...}: {
+    treefmt = {
+      projectRootFile = "flake.nix";
+      programs.alejandra.enable = true;
     };
+  };
 }
