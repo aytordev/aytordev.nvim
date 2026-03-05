@@ -4,7 +4,7 @@ default:
 
 # Build the Neovim package
 build:
-    nix build .#packages.default
+    nix build .#default
 
 # Format all Nix files with alejandra via treefmt
 fmt:
