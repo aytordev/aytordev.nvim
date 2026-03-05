@@ -4,8 +4,8 @@
       (inputs.nvf.lib.neovimConfiguration {
         inherit pkgs;
         modules = [
-          ../modules/aytordev
-          ../modules/nvf
+          ../../modules/aytordev
+          ../../modules/nvf
         ];
       }).neovim;
   };
