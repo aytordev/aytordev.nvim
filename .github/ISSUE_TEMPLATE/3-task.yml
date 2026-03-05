@@ -1,0 +1,36 @@
+name: Technical Task
+description: Refactor, infrastructure, or tech debt work
+labels: ["type:task"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What needs to be done
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: Why this matters — what problem does it solve or what does it unblock
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: affected-packages
+    attributes:
+      label: Affected packages
+      options:
+        - label: "`@overseer/domain`"
+        - label: "`@overseer/shared`"
+        - label: "`apps/server`"
+        - label: "`apps/client`"
+        - label: "Infrastructure / CI"
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Any other context or references

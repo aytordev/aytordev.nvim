@@ -1,0 +1,56 @@
+# Label reference for aytordev/aytordev.nvim
+# This file documents the label scheme — it is NOT auto-synced.
+# To recreate labels, run the gh commands in the project README or CONTRIBUTING guide.
+
+# --- Type ---
+- name: "type:feature"
+  color: "5EBFCC"
+  description: "New capability or enhancement"
+
+- name: "type:bug"
+  color: "D73A4A"
+  description: "Unexpected behavior"
+
+- name: "type:task"
+  color: "7057FF"
+  description: "Technical work (refactor, infra, tech debt)"
+
+- name: "type:docs"
+  color: "0075CA"
+  description: "Documentation improvement"
+
+# --- Scope ---
+- name: "scope:flake"
+  color: "C2E0C6"
+  description: "Flake inputs, outputs, and wiring"
+
+- name: "scope:plugins"
+  color: "C2E0C6"
+  description: "Plugin configuration (modules/nixvim/plugins/)"
+
+- name: "scope:lsp"
+  color: "C2E0C6"
+  description: "LSP servers and diagnostics"
+
+- name: "scope:ci"
+  color: "C2E0C6"
+  description: "GitHub Actions and CI workflows"
+
+# --- Status ---
+- name: "blocked"
+  color: "E4E669"
+  description: "Blocked by dependency"
+
+# --- Onboarding ---
+- name: "good first issue"
+  color: "7057FF"
+  description: "Good for newcomers"
+
+# --- CI ---
+- name: "dependencies"
+  color: "0366D6"
+  description: "Dependency updates (flake.lock)"
+
+- name: "automated"
+  color: "EDEDED"
+  description: "Created by automation"

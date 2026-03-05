@@ -1,0 +1,23 @@
+name: Documentation
+description: Improvements or additions to documentation
+labels: ["type:docs"]
+body:
+  - type: textarea
+    id: what-needs-documenting
+    attributes:
+      label: What needs documenting
+      description: Describe the gap or improvement
+    validations:
+      required: true
+
+  - type: input
+    id: section-area
+    attributes:
+      label: Section / area affected
+      placeholder: "e.g. README, API reference, architecture docs"
+
+  - type: input
+    id: related-issues
+    attributes:
+      label: Related issues
+      placeholder: "#42, #43"

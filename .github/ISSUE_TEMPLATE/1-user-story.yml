@@ -1,0 +1,46 @@
+name: User Story / Feature
+description: Propose a new capability or enhancement
+labels: ["type:feature"]
+body:
+  - type: textarea
+    id: user-story
+    attributes:
+      label: User story
+      description: "Format: As a [role], I want [capability], so that [goal]"
+      placeholder: "As a developer, I want ..., so that ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: Checklist of conditions that must be true for this story to be complete
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+    validations:
+      required: true
+
+  - type: input
+    id: prd-reference
+    attributes:
+      label: PRD reference
+      description: Link to relevant PRD section or issue (optional)
+      placeholder: "#42 or docs/prd.md#section"
+
+  - type: checkboxes
+    id: affected-packages
+    attributes:
+      label: Affected packages
+      options:
+        - label: "`@overseer/domain`"
+        - label: "`@overseer/shared`"
+        - label: "`apps/server`"
+        - label: "`apps/client`"
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Any other context, mockups, or references
