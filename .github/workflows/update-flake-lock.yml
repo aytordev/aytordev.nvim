@@ -1,0 +1,23 @@
+name: Update Flake Lock
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # Weekly on Sunday at midnight UTC
+  workflow_dispatch:
+
+jobs:
+  update-flake-lock:
+    name: Update flake.lock
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v14
+      - uses: DeterminateSystems/update-flake-lock@v28
+        with:
+          pr-title: ":wrench: chore: update flake.lock"
+          pr-labels: |
+            dependencies
+            automated
