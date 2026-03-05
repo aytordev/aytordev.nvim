@@ -6,6 +6,7 @@
     ./devshells
     ./formatter
     ./checks
+    ./overlays
   ];
 
   systems = import inputs.systems;
