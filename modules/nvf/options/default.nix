@@ -50,7 +50,7 @@
         virtualedit = "block";
         splitkeep = "screen";
 
-        timeoutlen = 300;
+        tm = 300;
         updatetime = 200;
 
         undolevels = 10000;
