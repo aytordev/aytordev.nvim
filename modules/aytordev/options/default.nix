@@ -1,5 +1,6 @@
 {...}: {
   imports = [
-    ./options
+    ./editor
+    ./theme
   ];
 }

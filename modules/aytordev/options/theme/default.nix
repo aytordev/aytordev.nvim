@@ -1,7 +1,7 @@
 {lib, ...}: {
   options.aytordev = {
     colorscheme = lib.mkOption {
-      type = lib.types.str;
+      type = lib.types.enum ["kanagawa"];
       default = "kanagawa";
       description = "The colorscheme to use.";
     };

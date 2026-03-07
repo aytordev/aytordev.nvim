@@ -1,10 +1,14 @@
 {...}: {
   imports = let
-    entries = builtins.readDir ./.;
-    moduleNames =
+    pluginDir = ./plugins;
+    entries = builtins.readDir pluginDir;
+    pluginNames =
       builtins.filter
       (name: entries.${name} == "directory")
       (builtins.attrNames entries);
   in
-    map (name: ./. + "/${name}") moduleNames;
+    map (name: pluginDir + "/${name}") pluginNames
+    ++ [
+      ./options
+    ];
 }
