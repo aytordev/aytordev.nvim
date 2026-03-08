@@ -17,6 +17,7 @@
 
     options =
       {
+        autoread = true;
         autowrite = true;
         confirm = true;
         mouse = "a";
@@ -66,6 +67,12 @@
 
     luaConfigRC.editorShortmess = lib.nvim.dag.entryAfter ["optionsScript"] ''
       vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
+    '';
+
+    luaConfigRC.editorAutoread = lib.nvim.dag.entryAfter ["optionsScript"] ''
+      vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+        command = "checktime",
+      })
     '';
   };
 }
