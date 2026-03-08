@@ -1,6 +1,8 @@
 # Language support (LSP, formatter, linter, treesitter per language)
 {...}: {
   config.vim.languages = {
+    enableTreesitter = true;
+
     # Nix and Lua (moved from lsp/default.nix)
     nix.enable = true;
     lua.enable = true;
