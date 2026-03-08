@@ -14,6 +14,9 @@
     yaml.enable = true;
     toml.enable = true;
 
+    # Web (HTML autotag for JSX/TSX/HTML)
+    html.enable = true;
+
     # Programming languages
     ts.enable = true;
     python.enable = true;
