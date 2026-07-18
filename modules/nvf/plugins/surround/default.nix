@@ -1,5 +1,11 @@
 # nvim-surround for surround operations
 # https://github.com/kylechui/nvim-surround
-{...}: {
-  config.vim.utility.surround.enable = true;
+{
+  config,
+  lib,
+  ...
+}: {
+  config = lib.mkIf config.aytordev.plugins.surround {
+    vim.utility.surround.enable = lib.mkDefault true;
+  };
 }

@@ -1,5 +1,11 @@
 # Harpoon2 quick file navigation
 # https://github.com/ThePrimeagen/harpoon/tree/harpoon2
-{...}: {
-  config.vim.navigation.harpoon.enable = true;
+{
+  config,
+  lib,
+  ...
+}: {
+  config = lib.mkIf config.aytordev.plugins.harpoon {
+    vim.navigation.harpoon.enable = lib.mkDefault true;
+  };
 }

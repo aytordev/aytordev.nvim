@@ -1,5 +1,11 @@
 # Mini.hipatterns - highlight color patterns inline
 # https://github.com/echasnovski/mini.hipatterns
-{...}: {
-  config.vim.mini.hipatterns.enable = true;
+{
+  config,
+  lib,
+  ...
+}: {
+  config = lib.mkIf config.aytordev.plugins."mini-hipatterns" {
+    vim.mini.hipatterns.enable = lib.mkDefault true;
+  };
 }
