@@ -23,10 +23,7 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    systems.url = "github:nix-systems/default";
   };
 
-  outputs = inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs;} (import ./flake);
+  outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (import ./flake);
 }
