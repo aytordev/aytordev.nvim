@@ -5,6 +5,10 @@ on:
     - cron: "0 0 * * 0" # Weekly on Sunday at midnight UTC
   workflow_dispatch:
 
+concurrency:
+  group: update-flake-lock
+  cancel-in-progress: false
+
 jobs:
   update-flake-lock:
     name: Update flake.lock
@@ -13,11 +17,29 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@v14
-      - uses: DeterminateSystems/update-flake-lock@v28
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+      - uses: DeterminateSystems/magic-nix-cache-action@908b263ff629f4cc17666315b7fd3ec127c6244d # v14
+      - name: Update flake.lock
+        run: nix flake update
+      - name: Evaluate all supported systems
+        run: nix flake check --all-systems --no-build
+      - name: Run checks
+        run: nix flake check
+      - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
-          pr-title: ":wrench: chore: update flake.lock"
-          pr-labels: |
+          add-paths: flake.lock
+          base: main
+          branch: automated/update-flake-lock
+          delete-branch: true
+          commit-message: ":wrench: chore(deps): update flake.lock"
+          title: ":wrench: chore(deps): update flake.lock"
+          body: |
+            Automated weekly dependency update.
+
+            Validation completed before opening this pull request:
+            - `nix flake check --all-systems --no-build`
+            - `nix flake check`
+          labels: |
             dependencies
             automated

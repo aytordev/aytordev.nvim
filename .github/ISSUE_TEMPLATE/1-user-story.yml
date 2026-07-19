@@ -1,46 +1,55 @@
-name: User Story / Feature
-description: Propose a new capability or enhancement
+name: Feature Request
+description: Propose a new editor capability or improvement
 labels: ["type:feature"]
 body:
   - type: textarea
-    id: user-story
+    id: problem
     attributes:
-      label: User story
-      description: "Format: As a [role], I want [capability], so that [goal]"
-      placeholder: "As a developer, I want ..., so that ..."
+      label: Problem
+      description: What workflow or limitation should be improved?
+      placeholder: Describe the current behavior and why it is insufficient.
     validations:
       required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: Describe the behavior you want, not only a specific implementation.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: affected-areas
+    attributes:
+      label: Affected areas
+      options:
+        - label: Flake or package API
+        - label: Home Manager integration
+        - label: Editor options or keymaps
+        - label: Plugins or UI
+        - label: Languages, LSP, or formatting
+        - label: CI or documentation
 
   - type: textarea
     id: acceptance-criteria
     attributes:
       label: Acceptance criteria
-      description: Checklist of conditions that must be true for this story to be complete
+      description: List observable conditions that would make the feature complete.
       placeholder: |
-        - [ ] Criterion 1
-        - [ ] Criterion 2
+        - [ ] Expected behavior is available
+        - [ ] Relevant checks cover the change
     validations:
       required: true
 
-  - type: input
-    id: prd-reference
+  - type: textarea
+    id: alternatives
     attributes:
-      label: PRD reference
-      description: Link to relevant PRD section or issue (optional)
-      placeholder: "#42 or docs/prd.md#section"
-
-  - type: checkboxes
-    id: affected-packages
-    attributes:
-      label: Affected packages
-      options:
-        - label: "`@overseer/domain`"
-        - label: "`@overseer/shared`"
-        - label: "`apps/server`"
-        - label: "`apps/client`"
+      label: Alternatives considered
+      description: Existing plugins, configuration, or workarounds you evaluated.
 
   - type: textarea
-    id: additional-context
+    id: context
     attributes:
       label: Additional context
-      description: Any other context, mockups, or references
+      description: Add links, screenshots, or related issues.

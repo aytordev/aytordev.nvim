@@ -1,12 +1,12 @@
 name: Technical Task
-description: Refactor, infrastructure, or tech debt work
+description: Propose maintenance, refactoring, or infrastructure work
 labels: ["type:task"]
 body:
   - type: textarea
-    id: description
+    id: work
     attributes:
-      label: Description
-      description: What needs to be done
+      label: Work required
+      description: Describe the concrete technical change.
     validations:
       required: true
 
@@ -14,23 +14,35 @@ body:
     id: motivation
     attributes:
       label: Motivation
-      description: Why this matters — what problem does it solve or what does it unblock
+      description: Explain the risk, debt, or workflow this addresses.
     validations:
       required: true
 
   - type: checkboxes
-    id: affected-packages
+    id: affected-areas
     attributes:
-      label: Affected packages
+      label: Affected areas
       options:
-        - label: "`@overseer/domain`"
-        - label: "`@overseer/shared`"
-        - label: "`apps/server`"
-        - label: "`apps/client`"
-        - label: "Infrastructure / CI"
+        - label: Flake or package API
+        - label: Home Manager integration
+        - label: Editor options or keymaps
+        - label: Plugins or UI
+        - label: Languages, LSP, or formatting
+        - label: CI or documentation
 
   - type: textarea
-    id: additional-context
+    id: completion
+    attributes:
+      label: Completion criteria
+      description: List the checks or observable outcomes required to close the task.
+      placeholder: |
+        - [ ] Implementation is complete
+        - [ ] Relevant checks pass
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
     attributes:
       label: Additional context
-      description: Any other context or references
+      description: Add related issues, upstream references, or constraints.

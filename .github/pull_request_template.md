@@ -1,41 +1,38 @@
-## Description
+# Pull Request
 
-<!-- Why does this PR exist? What does it achieve? -->
+## Why
 
-## Related issue
+<!-- What problem does this solve? Link the relevant issue when possible. -->
 
-<!-- Closes #NNN -->
+## What Changed
 
-## Type of change
+<!-- Summarize the behavior and implementation. -->
 
-- [ ] Feature
-- [ ] Bug fix
-- [ ] Refactor
-- [ ] Documentation
-- [ ] Technical task
-- [ ] Breaking change
+## Scope
 
-## Packages changed
+- [ ] Flake or package API
+- [ ] Home Manager integration
+- [ ] Editor options or keymaps
+- [ ] Plugins or UI
+- [ ] Languages, LSP, or formatting
+- [ ] CI or documentation
 
-- [ ] `@overseer/domain`
-- [ ] `@overseer/shared`
-- [ ] `apps/server`
-- [ ] `apps/client`
+## Validation
 
-## Testing strategy
+- [ ] `nix fmt -- --fail-on-change .`
+- [ ] `nix flake check`
+- [ ] `nix flake check --all-systems --no-build` when platform wiring changed
+- [ ] Manual Neovim verification when runtime behavior changed
 
-<!-- How was this validated? (tests, manual verification, etc.) -->
+<!-- Add commands, logs, screenshots, or limitations relevant to this PR. -->
 
-## Checklist
+## Compatibility
 
-- [ ] Tests pass (`pnpm test`)
-- [ ] Typecheck passes (`pnpm typecheck`)
-- [ ] Commits follow [gitmoji conventions](./CONTRIBUTING.md#25-commit-with-gitmoji)
+<!--
+Note public option, keymap, dependency, or platform changes.
+Write "None" when not applicable.
+-->
 
-## Breaking changes
+## Review Notes
 
-<!-- None, or describe what breaks and migration steps -->
-
-## Notes for reviewers
-
-<!-- Optional: anything reviewers should know -->
+<!-- Point reviewers to the highest-risk or most important files first. -->
