@@ -5,7 +5,14 @@
   lib,
   ...
 }: {
-  config = lib.mkIf config.aytordev.plugins."grug-far" {
-    vim.utility.grug-far-nvim.enable = lib.mkDefault true;
-  };
+  vim.utility.grug-far-nvim.enable = lib.mkDefault true;
+
+  vim.keymaps = lib.optionals config.vim.utility.grug-far-nvim.enable [
+    {
+      key = "<leader>sr";
+      mode = "n";
+      action = "<cmd>GrugFar<CR>";
+      desc = "Search and replace";
+    }
+  ];
 }

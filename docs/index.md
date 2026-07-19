@@ -89,10 +89,12 @@ nix run github:aytordev/aytordev.nvim#core
 
 ## Plugins
 
-Plugin modules are discovered automatically from `modules/nvf/plugins/`. Every
-plugin is enabled by default and exposed under `aytordev.plugins` using its
-directory name. Available names are:
+Plugin configuration fragments are discovered automatically from
+`modules/nvf/plugins/`. The loader derives the option name from each directory
+and guards the complete fragment behind that option. Every plugin is enabled by
+default and exposed under `aytordev.plugins`. Available names are:
 
+<!-- plugin-list:start -->
 - `autopairs`
 - `blink-cmp`
 - `diffview`
@@ -117,6 +119,7 @@ directory name. Available names are:
 - `treesitter`
 - `which-key`
 - `zen-mode`
+<!-- plugin-list:end -->
 
 Disable any combination through Home Manager:
 
@@ -128,8 +131,8 @@ aytordev.plugins = {
 };
 ```
 
-Disabling a plugin also removes its plugin-specific keymaps. The `keymaps`,
-`languages`, and `lsp` directories are infrastructure modules and therefore do
+Disabling a plugin also removes its plugin-specific keymaps. Language and LSP
+infrastructure live outside the discovered plugin collection and therefore do
 not have entries under `aytordev.plugins`.
 
 ## Keymaps
@@ -167,10 +170,13 @@ Gitsigns and Harpoon.
 | --- | --- |
 | `modules/aytordev/` | Public distro options. |
 | `modules/nvf/options/` | Core editor and wrapper configuration. |
-| `modules/nvf/plugins/` | One module per plugin or capability. |
+| `modules/nvf/plugins/` | Auto-discovered configuration fragment per plugin. |
+| `modules/nvf/languages/` | Language support integration. |
+| `modules/nvf/lsp/` | Shared LSP infrastructure. |
 | `flake/packages/` | Standalone package output. |
 | `overlays/` | Packages built against a consumer's nixpkgs. |
 | `flake/home-manager/` | Home Manager integration and option bridge. |
 | `flake/checks/` | Build, integration, and runtime checks. |
 
-Directories under `modules/nvf/plugins/` are imported automatically.
+Directories under `modules/nvf/plugins/` are loaded automatically and guarded
+by the option derived from their directory name.

@@ -1,11 +1,9 @@
-{...}: let
-  pluginDir = ./plugins;
-  discovery = import ./plugins/discovery.nix;
-in {
-  imports =
-    [
-      ../aytordev
-      ./options
-    ]
-    ++ map (name: pluginDir + "/${name}") discovery.moduleNames;
+{...}: {
+  imports = [
+    ../aytordev
+    ./languages
+    ./lsp
+    ./options
+    ./plugins
+  ];
 }

@@ -21,16 +21,18 @@ The shell provides `just`, Alejandra, and `nil`.
 | --- | --- |
 | `modules/aytordev/` | Public `aytordev.*` options. |
 | `modules/nvf/options/` | Core Neovim and wrapper settings. |
-| `modules/nvf/plugins/` | Plugin-specific modules. |
-| `flake/` | Packages, modules, checks, formatter, and dev shell outputs. |
+| `modules/nvf/plugins/` | Auto-discovered plugin configuration fragments. |
+| `flake/checks/<group>/` | Check modules following the `default.nix` convention. |
+| `flake/` | Packages, modules, formatter, and dev shell outputs. |
 | `.github/` | CI and collaboration templates. |
 
-Each plugin belongs in its own `modules/nvf/plugins/<name>/default.nix`
-directory. Plugin directories are discovered automatically and receive a
-default-enabled `aytordev.plugins.<name>` option. Guard the module configuration
-with `lib.mkIf config.aytordev.plugins.<name>`, and keep each module limited to
-one plugin or tightly related capability. Infrastructure modules must be added
-to `infrastructureModules` in `modules/nvf/plugins/discovery.nix` instead.
+Each plugin belongs in `modules/nvf/plugins/<name>/default.nix`. Plugin
+directories are discovered automatically and receive a default-enabled
+`aytordev.plugins.<name>` option. The file must return a non-empty configuration
+attribute set rather than a complete Nix module; the loader applies the plugin
+toggle to the entire fragment. Keep plugin-specific keymaps in the same
+fragment. Shared infrastructure belongs directly under `modules/nvf/`, outside
+the discovered plugin collection.
 
 Nix flakes ignore untracked files. If a new Nix file is not visible during
 evaluation, stage it or mark it as intent-to-add before testing:
