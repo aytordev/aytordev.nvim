@@ -1,0 +1,33 @@
+name: Question
+description: Ask about installation, configuration, or project behavior
+labels: ["type:question"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What are you trying to understand or accomplish?
+    validations:
+      required: true
+
+  - type: textarea
+    id: attempted
+    attributes:
+      label: What have you tried?
+      description: Share relevant configuration, commands, or documentation you consulted.
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include the system, installation method, and revision when relevant.
+      placeholder: |
+        - System: x86_64-linux
+        - Installation: Home Manager module
+        - Revision: commit or flake.lock revision
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add logs, screenshots, or links that clarify the question.
