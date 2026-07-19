@@ -1,40 +1,40 @@
 name: Bug Report
-description: Report unexpected behavior
+description: Report reproducible unexpected behavior
 labels: ["type:bug"]
 body:
   - type: textarea
-    id: description
+    id: summary
     attributes:
-      label: Description
-      description: Clear summary of the bug
+      label: Summary
+      description: Describe the failure and its impact.
     validations:
       required: true
 
   - type: textarea
-    id: steps-to-reproduce
+    id: reproduction
     attributes:
-      label: Steps to reproduce
-      description: Minimal steps to trigger the bug
+      label: Reproduction
+      description: Provide the smallest sequence that consistently reproduces the issue.
       placeholder: |
-        1. Go to ...
-        2. Click on ...
-        3. See error
+        1. Run `nix run github:aytordev/aytordev.nvim`
+        2. Open ...
+        3. Execute ...
     validations:
       required: true
 
   - type: textarea
-    id: expected-behavior
+    id: expected
     attributes:
       label: Expected behavior
-      description: What should happen
+      description: What should have happened?
     validations:
       required: true
 
   - type: textarea
-    id: actual-behavior
+    id: actual
     attributes:
       label: Actual behavior
-      description: What actually happens
+      description: What happened instead?
     validations:
       required: true
 
@@ -42,24 +42,31 @@ body:
     id: environment
     attributes:
       label: Environment
-      description: OS, Node version, browser, etc.
+      description: Include enough information to reproduce the same Nix and Neovim environment.
       placeholder: |
-        - OS: macOS 15.x
-        - Node: 25.x
-        - Browser: Chrome 130
+        - System: aarch64-darwin
+        - Nix: `nix --version`
+        - Installation: `nix run`, package, or Home Manager module
+        - Revision: commit or flake.lock revision
+        - Neovim: `nvim --version`
+    validations:
+      required: true
 
   - type: dropdown
     id: severity
     attributes:
       label: Severity
       options:
-        - low
-        - medium
-        - high
-        - critical
+        - Low
+        - Medium
+        - High
+        - Critical
+    validations:
+      required: true
 
   - type: textarea
-    id: screenshots-logs
+    id: logs
     attributes:
-      label: Screenshots / logs
-      description: Paste screenshots or relevant log output
+      label: Logs and health output
+      description: Paste relevant errors, `:messages`, or focused `:checkhealth` output.
+      render: text
