@@ -1,5 +1,5 @@
 {lib, ...}: let
-  pluginNames = (import ../../nvf/plugins/discovery.nix).pluginNames;
+  pluginNames = import ../../nvf/plugin-discovery;
   supportedLanguages = [
     "bash"
     "go"
