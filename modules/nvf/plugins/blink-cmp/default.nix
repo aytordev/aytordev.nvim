@@ -1,8 +1,14 @@
 # Blink.cmp completion engine
 # https://github.com/Saghen/blink.cmp
-{...}: {
-  config.vim.autocomplete.blink-cmp = {
-    enable = true;
-    friendly-snippets.enable = true;
+{
+  config,
+  lib,
+  ...
+}: {
+  config = lib.mkIf config.aytordev.plugins."blink-cmp" {
+    vim.autocomplete.blink-cmp = {
+      enable = lib.mkDefault true;
+      friendly-snippets.enable = lib.mkDefault true;
+    };
   };
 }

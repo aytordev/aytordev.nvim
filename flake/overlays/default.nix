@@ -1,3 +1,3 @@
-{...}: {
-  flake.overlays.default = import ../../overlays;
+{mkAytordevNeovim, ...}: {
+  flake.overlays.default = import ../../overlays {inherit mkAytordevNeovim;};
 }

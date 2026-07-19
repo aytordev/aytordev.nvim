@@ -1,23 +1,32 @@
 name: Documentation
-description: Improvements or additions to documentation
+description: Report missing, incorrect, or unclear documentation
 labels: ["type:docs"]
 body:
-  - type: textarea
-    id: what-needs-documenting
+  - type: input
+    id: location
     attributes:
-      label: What needs documenting
-      description: Describe the gap or improvement
+      label: Location
+      description: Link or name the affected document and section.
+      placeholder: README.md, Configuration Reference, or CONTRIBUTING.md
     validations:
       required: true
 
-  - type: input
-    id: section-area
+  - type: textarea
+    id: problem
     attributes:
-      label: Section / area affected
-      placeholder: "e.g. README, API reference, architecture docs"
+      label: Documentation problem
+      description: Explain what is missing, incorrect, or difficult to understand.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-change
+    attributes:
+      label: Proposed improvement
+      description: Describe the information or example that should be added.
 
   - type: input
     id: related-issues
     attributes:
       label: Related issues
-      placeholder: "#42, #43"
+      placeholder: "#42"
