@@ -8,7 +8,7 @@
   lib,
   ...
 }: {
-  config = lib.mkIf (config.aytordev.colorscheme == "kanagawa") {
+  config = lib.mkIf (config.aytordev.plugins.kanagawa && config.aytordev.colorscheme == "kanagawa") {
     vim.extraPlugins = {
       kanagawa = {
         package = pkgs.vimPlugins.kanagawa-nvim;
