@@ -1,9 +1,15 @@
 # Lualine statusline
 # https://github.com/nvim-lualine/lualine.nvim
-{...}: {
-  config.vim.statusline.lualine = {
-    enable = true;
-    theme = "auto";
-    globalStatus = true;
+{
+  config,
+  lib,
+  ...
+}: {
+  config = lib.mkIf config.aytordev.plugins.lualine {
+    vim.statusline.lualine = {
+      enable = lib.mkDefault true;
+      theme = lib.mkDefault "auto";
+      globalStatus = lib.mkDefault true;
+    };
   };
 }

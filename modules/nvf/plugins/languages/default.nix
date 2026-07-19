@@ -1,26 +1,18 @@
 # Language support (LSP, formatter, linter, treesitter per language)
-{...}: {
-  config.vim.languages = {
-    enableTreesitter = true;
-
-    # Nix and Lua (moved from lsp/default.nix)
-    nix.enable = true;
-    lua.enable = true;
-
-    # Universal (config files, docs, scripting)
-    markdown.enable = true;
-    bash.enable = true;
-    json.enable = true;
-    yaml.enable = true;
-    toml.enable = true;
-
-    # Web (HTML autotag for JSX/TSX/HTML)
-    html.enable = true;
-
-    # Programming languages
-    ts.enable = true;
-    python.enable = true;
-    go.enable = true;
-    rust.enable = true;
-  };
+{
+  config,
+  lib,
+  ...
+}: {
+  config.vim.languages =
+    {
+      enableTreesitter = lib.mkDefault config.aytordev.plugins.treesitter;
+    }
+    // builtins.listToAttrs (
+      map (name: {
+        inherit name;
+        value.enable = lib.mkDefault true;
+      })
+      config.aytordev.languages
+    );
 }

@@ -1,9 +1,9 @@
 # LSP infrastructure
 # https://github.com/neovim/nvim-lspconfig
-{...}: {
+{lib, ...}: {
   config.vim.lsp = {
-    enable = true;
-    formatOnSave = true;
-    trouble.enable = true;
+    enable = lib.mkDefault true;
+    formatOnSave = lib.mkDefault true;
+    trouble.enable = lib.mkDefault true;
   };
 }

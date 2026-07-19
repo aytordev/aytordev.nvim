@@ -1,8 +1,6 @@
-# Label reference for aytordev/aytordev.nvim
-# This file documents the label scheme — it is NOT auto-synced.
-# To recreate labels, run the gh commands in the project README or CONTRIBUTING guide.
+# Label reference for aytordev/aytordev.nvim. This file is not auto-synced.
 
-# --- Type ---
+# Type
 - name: "type:feature"
   color: "5EBFCC"
   description: "New capability or enhancement"
@@ -13,43 +11,73 @@
 
 - name: "type:task"
   color: "7057FF"
-  description: "Technical work (refactor, infra, tech debt)"
+  description: "Maintenance, refactoring, or infrastructure work"
 
 - name: "type:docs"
   color: "0075CA"
   description: "Documentation improvement"
 
-# --- Scope ---
+- name: "type:question"
+  color: "D876E3"
+  description: "Installation, configuration, or usage question"
+
+# Scope
 - name: "scope:flake"
   color: "C2E0C6"
-  description: "Flake inputs, outputs, and wiring"
+  description: "Flake inputs, outputs, and package wiring"
+
+- name: "scope:home-manager"
+  color: "C2E0C6"
+  description: "Home Manager module and public options"
+
+- name: "scope:editor"
+  color: "C2E0C6"
+  description: "Core editor options and keymaps"
 
 - name: "scope:plugins"
   color: "C2E0C6"
-  description: "Plugin configuration (modules/nixvim/plugins/)"
+  description: "Plugin configuration under modules/nvf/plugins"
+
+- name: "scope:languages"
+  color: "C2E0C6"
+  description: "Language modules, formatters, and diagnostics"
 
 - name: "scope:lsp"
   color: "C2E0C6"
-  description: "LSP servers and diagnostics"
+  description: "LSP servers and client behavior"
 
 - name: "scope:ci"
   color: "C2E0C6"
-  description: "GitHub Actions and CI workflows"
+  description: "GitHub Actions and project checks"
 
-# --- Status ---
+- name: "scope:docs"
+  color: "C2E0C6"
+  description: "Documentation and collaboration templates"
+
+# Status and automation
+- name: "status:needs-review"
+  color: "FBCA04"
+  description: "Awaiting maintainer review"
+
+- name: "status:approved"
+  color: "0E8A16"
+  description: "Approved for implementation"
+
+- name: "size:exception"
+  color: "BFDADC"
+  description: "Large diff accepted as one reviewable unit"
+
 - name: "blocked"
   color: "E4E669"
-  description: "Blocked by dependency"
+  description: "Blocked by a dependency or decision"
 
-# --- Onboarding ---
 - name: "good first issue"
   color: "7057FF"
-  description: "Good for newcomers"
+  description: "Suitable for a first contribution"
 
-# --- CI ---
 - name: "dependencies"
   color: "0366D6"
-  description: "Dependency updates (flake.lock)"
+  description: "Dependency updates in flake.lock"
 
 - name: "automated"
   color: "EDEDED"
