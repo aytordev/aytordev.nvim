@@ -92,6 +92,32 @@ in {
       vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
     '';
 
+    luaConfigRC.editorFileWatcher = lib.nvim.dag.entryAfter ["optionsScript"] ''
+      do
+        local uv = vim.uv or vim.loop
+
+        if _G.aytordev_file_watcher then
+          _G.aytordev_file_watcher:stop()
+          _G.aytordev_file_watcher:close()
+        end
+
+        local watcher = uv.new_timer()
+        watcher:start(1000, 1000, vim.schedule_wrap(function()
+          vim.cmd("silent checktime")
+        end))
+        _G.aytordev_file_watcher = watcher
+
+        vim.api.nvim_create_autocmd("VimLeavePre", {
+          group = vim.api.nvim_create_augroup("aytordev_file_watcher", { clear = true }),
+          callback = function()
+            watcher:stop()
+            watcher:close()
+            _G.aytordev_file_watcher = nil
+          end,
+        })
+      end
+    '';
+
     augroups = [
       {
         name = "aytordev_editor_autoread";

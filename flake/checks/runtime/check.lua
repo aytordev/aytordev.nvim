@@ -27,6 +27,23 @@ if vim.fn.has("linux") == 1 then
   end
 end
 
+local function check_continuous_reload()
+  local watched = vim.fn.tempname() .. ".txt"
+  vim.fn.writefile({ "before" }, watched)
+  vim.cmd.edit(vim.fn.fnameescape(watched))
+  vim.fn.writefile({ "after" }, watched)
+
+  local reloaded = vim.wait(3000, function()
+    return vim.api.nvim_buf_get_lines(0, 0, 1, false)[1] == "after"
+  end)
+
+  if not reloaded then
+    fail("files changed on disk are not reloaded continuously")
+  end
+
+  vim.cmd("bwipeout!")
+end
+
 if profile == "minimal" then
   for _, command in ipairs({ "Neotree", "GrugFar" }) do
     if vim.fn.exists(":" .. command) == 2 then
@@ -48,6 +65,8 @@ if profile == "minimal" then
   if vim.opt.tabstop:get() ~= 2 then
     fail("editor options were not applied with plugins disabled")
   end
+
+  check_continuous_reload()
 
   return
 end
@@ -125,3 +144,5 @@ for _, name in ipairs(nix_linters) do
     fail("nvim-lint is missing the " .. name .. " linter")
   end
 end
+
+check_continuous_reload()
