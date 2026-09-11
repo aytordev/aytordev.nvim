@@ -3,7 +3,9 @@
 {lib, ...}: {
   vim.statusline.lualine = {
     enable = lib.mkDefault true;
-    theme = lib.mkDefault "auto";
-    globalStatus = lib.mkDefault true;
+    setupOpts.options = {
+      theme = lib.mkDefault "auto";
+      globalstatus = lib.mkDefault true;
+    };
   };
 }
