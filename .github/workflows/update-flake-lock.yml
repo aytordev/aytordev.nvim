@@ -14,8 +14,7 @@ jobs:
     name: Update flake.lock
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
@@ -26,8 +25,16 @@ jobs:
         run: nix flake check --all-systems --no-build
       - name: Run checks
         run: nix flake check
+      - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        id: app-token
+        with:
+          app-id: ${{ vars.AYTORDEV_NVIM_APP_ID }}
+          private-key: ${{ secrets.AYTORDEV_NVIM_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
       - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
+          token: ${{ steps.app-token.outputs.token }}
           add-paths: flake.lock
           base: main
           branch: automated/update-flake-lock
