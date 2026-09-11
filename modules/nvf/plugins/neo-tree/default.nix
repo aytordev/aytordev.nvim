@@ -13,6 +13,7 @@
         width = lib.mkDefault 30;
       };
       close_if_last_window = lib.mkDefault true;
+      filesystem.use_libuv_file_watcher = lib.mkDefault true;
     };
   };
 

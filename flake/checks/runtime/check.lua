@@ -145,4 +145,10 @@ for _, name in ipairs(nix_linters) do
   end
 end
 
+vim.cmd("Neotree show")
+if not require("neo-tree").config.filesystem.use_libuv_file_watcher then
+  fail("neo-tree is not watching the filesystem")
+end
+vim.cmd("Neotree close")
+
 check_continuous_reload()
