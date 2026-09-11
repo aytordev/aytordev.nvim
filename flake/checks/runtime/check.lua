@@ -50,6 +50,14 @@ if type(hipatterns.config.highlighters.hex_color) ~= "table" then
   fail("mini.hipatterns hex color highlighter is not configured")
 end
 
+local autoread_ok, autoread = pcall(vim.api.nvim_get_autocmds, {
+  group = "aytordev_editor_autoread",
+  event = "FocusGained",
+})
+if not autoread_ok or #autoread ~= 1 then
+  fail("checktime autocommand is missing or duplicated")
+end
+
 local goto_preview = require("goto-preview")
 if goto_preview.conf.references.provider ~= "snacks" then
   fail("goto-preview references provider is not Snacks")
