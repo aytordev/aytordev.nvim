@@ -105,18 +105,13 @@ vim.cmd("enew")
 vim.api.nvim_buf_set_lines(0, 0, -1, false, { "{a=1;}" })
 vim.bo.filetype = "nix"
 
-local format_error
-conform.format({ bufnr = 0, async = false, lsp_format = "never" }, function(err)
-  format_error = err
-end)
+local target = vim.fn.tempname() .. ".nix"
+vim.api.nvim_buf_set_name(0, target)
+vim.cmd("write")
 
-if format_error then
-  fail("conform failed to format a Nix buffer: " .. format_error)
-end
-
-local formatted = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
-if not formatted:find("a = 1", 1, true) then
-  fail("the Nix formatter did not run: " .. formatted)
+local saved = table.concat(vim.fn.readfile(target), "\n")
+if not saved:find("a = 1", 1, true) then
+  fail("format on save did not format the Nix buffer: " .. saved)
 end
 
 local lint = require("lint")
