@@ -45,6 +45,11 @@ for feature, available in pairs(features) do
   end
 end
 
+local hipatterns = require("mini.hipatterns")
+if type(hipatterns.config.highlighters.hex_color) ~= "table" then
+  fail("mini.hipatterns hex color highlighter is not configured")
+end
+
 local goto_preview = require("goto-preview")
 if goto_preview.conf.references.provider ~= "snacks" then
   fail("goto-preview references provider is not Snacks")
