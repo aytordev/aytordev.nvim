@@ -68,11 +68,11 @@
         message = "Home Manager applied the wrong clipboard register";
       }
       {
-        assertion = vim.clipboard.providers.wl-copy.enable == pkgs.stdenv.isLinux;
+        assertion = vim.clipboard.providers.wl-copy.enable == pkgs.stdenv.hostPlatform.isLinux;
         message = "wl-copy enablement does not match the platform";
       }
       {
-        assertion = vim.clipboard.providers.xclip.enable == pkgs.stdenv.isLinux;
+        assertion = vim.clipboard.providers.xclip.enable == pkgs.stdenv.hostPlatform.isLinux;
         message = "xclip enablement does not match the platform";
       }
       {
