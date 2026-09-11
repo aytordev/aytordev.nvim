@@ -16,6 +16,8 @@ namespace.
 | `aytordev.clipboard` | enum | `"unnamedplus"` | Clipboard mode. |
 | `aytordev.clipboardProviders` | list | Linux: `["wl-copy" "xclip"]` | Linux clipboard providers to include. |
 | `aytordev.languages` | list | All supported | Enabled languages. |
+| `aytordev.format` | boolean | `true` | Per-language formatters and format on save. |
+| `aytordev.extraDiagnostics` | boolean | `true` | Per-language linters and extra diagnostics. |
 | `aytordev.colorscheme` | enum | `"kanagawa"` | Colorscheme. |
 | `aytordev.style` | enum | `"wave"` | Colorscheme style. |
 | `aytordev.transparent` | boolean | `false` | Transparent background. |
@@ -73,7 +75,9 @@ The default package enables:
 - YAML
 
 Each nvf language module provides its associated Treesitter grammar and may
-also add an LSP server, formatter, or diagnostics tool.
+also add an LSP server, formatter, or diagnostics tool. Formatters and extra
+diagnostics are enabled for every selected language by default; disable them
+globally with `aytordev.format` or `aytordev.extraDiagnostics`.
 
 Select an exact language set through Home Manager:
 
