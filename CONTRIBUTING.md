@@ -74,6 +74,21 @@ nix run .
 Do not update `flake.lock` unless the dependency change is intentional. Keep
 dependency updates separate from unrelated code changes.
 
+## Dependency Updates
+
+A scheduled workflow opens a pull request that updates `flake.lock`. The pull
+request must run the normal `pull_request` checks, so it is created with a
+GitHub App token instead of the default `GITHUB_TOKEN`. Configure it once:
+
+1. Create a GitHub App with `Contents: Read and write` and
+   `Pull requests: Read and write` repository permissions.
+2. Install the App on this repository.
+3. Add the App ID as the `AYTORDEV_NVIM_APP_ID` repository variable.
+4. Add a private key for the App as the `AYTORDEV_NVIM_APP_PRIVATE_KEY`
+   repository secret.
+
+Keep `flake.lock` updates separate from unrelated changes.
+
 ## Commit Messages
 
 Use Conventional Commits prefixed with a Gitmoji code:

@@ -16,6 +16,8 @@ namespace.
 | `aytordev.clipboard` | enum | `"unnamedplus"` | Clipboard mode. |
 | `aytordev.clipboardProviders` | list | Linux: `["wl-copy" "xclip"]` | Linux clipboard providers to include. |
 | `aytordev.languages` | list | All supported | Enabled languages. |
+| `aytordev.format` | boolean | `true` | Per-language formatters and format on save. |
+| `aytordev.extraDiagnostics` | boolean | `true` | Per-language linters and extra diagnostics. |
 | `aytordev.colorscheme` | enum | `"kanagawa"` | Colorscheme. |
 | `aytordev.style` | enum | `"wave"` | Colorscheme style. |
 | `aytordev.transparent` | boolean | `false` | Transparent background. |
@@ -30,10 +32,11 @@ Colorscheme accepts `kanagawa` or `none`. The supported Kanagawa styles are
 `wave`, `dragon`, and `lotus`; `style` and `transparent` only affect Kanagawa.
 The editor uses the native clipboard provider available on macOS.
 
-## Advanced nvf Configuration
+## Configuration Contract
 
-The `aytordev.*` options are the stable public interface. Advanced consumers
-can also add nvf settings directly:
+The `aytordev.*` options are the stable public interface and are authoritative
+for the features the distribution coordinates. Advanced consumers can also set
+nvf options directly:
 
 ```nix
 programs.nvf.settings.vim = {
@@ -47,7 +50,24 @@ programs.nvf.settings.vim = {
 ```
 
 Distro opinions managed through nvf are defaults, so these overrides do not
-require `lib.mkForce`.
+require `lib.mkForce`. Direct nvf options keep following nvf's own rules,
+dependencies, and defaults.
+
+Some distro features span several nvf options, so disabling them through a
+single nvf option can conflict. Treesitter is one example: every enabled
+language turns its grammar on, so this override conflicts with the language
+set:
+
+```nix
+# Conflicts with the enabled languages.
+programs.nvf.settings.vim.treesitter.enable = false;
+```
+
+Use the public toggle instead, which coordinates the whole feature:
+
+```nix
+aytordev.plugins.treesitter = false;
+```
 
 An explicit nested value can override the public default when necessary:
 
@@ -73,7 +93,9 @@ The default package enables:
 - YAML
 
 Each nvf language module provides its associated Treesitter grammar and may
-also add an LSP server, formatter, or diagnostics tool.
+also add an LSP server, formatter, or diagnostics tool. Formatters and extra
+diagnostics are enabled for every selected language by default; disable them
+globally with `aytordev.format` or `aytordev.extraDiagnostics`.
 
 Select an exact language set through Home Manager:
 
@@ -133,7 +155,13 @@ aytordev.plugins = {
 
 Disabling a plugin also removes its plugin-specific keymaps. Language and LSP
 infrastructure live outside the discovered plugin collection and therefore do
-not have entries under `aytordev.plugins`.
+not have entries under `aytordev.plugins`. Setting `aytordev.plugins.<name> =
+false` removes the configuration fragment the distribution contributes for
+that plugin; it does not prevent another module from enabling the plugin.
+
+Plugin directory names map directly to public option names, so renaming a
+directory also renames a public option. Treat these names as stable API, and
+review whether a newly added plugin should be enabled by default.
 
 ## Keymaps
 

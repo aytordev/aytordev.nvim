@@ -33,7 +33,10 @@
       inherit name;
     });
 in {
-  _module.args = {inherit mkAytordevNeovim;};
+  _module.args = {
+    inherit mkAytordevNeovim;
+    profiles = import ./profiles.nix;
+  };
 
   imports = [
     inputs.treefmt-nix.flakeModule

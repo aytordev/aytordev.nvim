@@ -92,10 +92,24 @@ in {
       vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
     '';
 
-    luaConfigRC.editorAutoread = lib.nvim.dag.entryAfter ["optionsScript"] ''
-      vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-        command = "checktime",
-      })
-    '';
+    augroups = [
+      {
+        name = "aytordev_editor_autoread";
+        clear = true;
+      }
+    ];
+
+    autocmds = [
+      {
+        event = [
+          "FocusGained"
+          "TermClose"
+          "TermLeave"
+        ];
+        group = "aytordev_editor_autoread";
+        command = "checktime";
+        desc = "Reload files changed on disk when the terminal regains focus";
+      }
+    ];
   };
 }

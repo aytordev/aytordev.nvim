@@ -7,6 +7,8 @@
   config.vim.languages =
     {
       enableTreesitter = lib.mkDefault config.aytordev.plugins.treesitter;
+      enableFormat = lib.mkDefault config.aytordev.format;
+      enableExtraDiagnostics = lib.mkDefault config.aytordev.extraDiagnostics;
     }
     // builtins.listToAttrs (
       map (name: {
