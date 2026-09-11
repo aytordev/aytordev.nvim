@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ./contracts
+    ./documentation
     ./home-manager
     ./packages
     ./plugins
