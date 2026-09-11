@@ -163,6 +163,13 @@ Plugin directory names map directly to public option names, so renaming a
 directory also renames a public option. Treat these names as stable API, and
 review whether a newly added plugin should be enabled by default.
 
+## Editor Behavior
+
+- Files changed on disk are reloaded automatically: every second, and when
+  the terminal regains focus. Buffers with unsaved changes are left untouched.
+- Neo-tree watches the filesystem, so files created, renamed, or deleted
+  outside Neovim appear in the tree without a manual refresh.
+
 ## Keymaps
 
 The leader and local leader keys are both `Space`.

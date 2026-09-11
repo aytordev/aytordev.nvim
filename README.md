@@ -97,7 +97,7 @@ The overlay builds against the consumer's nixpkgs and also exposes
 ## Included Capabilities
 
 - LSP, formatting, completion, Treesitter, and diagnostics
-- Continuous reload of files changed on disk, plus on terminal focus
+- Continuous reload of changed files and an auto-refreshing file tree
 - Configurable Nix, Lua, TypeScript, Python, Go, Rust, and configuration languages
 - Snacks picker, Neo-tree, Oil, GrugFar, Diffview, Gitsigns, and Harpoon
 - Kanagawa themes with transparent background support
