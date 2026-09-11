@@ -1,16 +1,34 @@
-{...}: {
+{inputs, ...}: {
   perSystem = {
     config,
     pkgs,
     ...
   }: let
-    mkRuntimeCheck = name: package:
+    lib = pkgs.lib;
+    pluginNames = import ../../../modules/nvf/plugin-discovery;
+    minimalPackage =
+      (inputs.nvf.lib.neovimConfiguration {
+        inherit pkgs;
+        modules = [
+          ../../../modules/nvf
+          {
+            config.aytordev = {
+              colorscheme = "none";
+              languages = [];
+              plugins = lib.genAttrs pluginNames (_: false);
+            };
+          }
+        ];
+      }).neovim;
+
+    mkRuntimeCheck = name: profile: package:
       pkgs.runCommand "aytordev-nvim-${name}-runtime-check" {} ''
         export HOME="$TMPDIR"
         export XDG_CACHE_HOME="$TMPDIR/cache"
         export XDG_STATE_HOME="$TMPDIR/state"
+        export AYTORDEV_PROFILE=${profile}
         export PATH="${
-          pkgs.lib.makeBinPath [
+          lib.makeBinPath [
             pkgs.bash
             pkgs.coreutils
           ]
@@ -27,8 +45,9 @@
       '';
   in {
     checks = {
-      runtime = mkRuntimeCheck "default" config.packages.default;
-      runtime-core = mkRuntimeCheck "core" config.packages.core;
+      runtime = mkRuntimeCheck "default" "full" config.packages.default;
+      runtime-core = mkRuntimeCheck "core" "full" config.packages.core;
+      runtime-minimal = mkRuntimeCheck "minimal" "minimal" minimalPackage;
     };
   };
 }

@@ -1,3 +1,5 @@
+local profile = vim.env.AYTORDEV_PROFILE or "full"
+
 local function fail(message)
   vim.api.nvim_err_writeln(message)
   vim.cmd("cquit 1")
@@ -23,6 +25,31 @@ if vim.fn.has("linux") == 1 then
       fail(command .. " is unavailable")
     end
   end
+end
+
+if profile == "minimal" then
+  for _, command in ipairs({ "Neotree", "GrugFar" }) do
+    if vim.fn.exists(":" .. command) == 2 then
+      fail(command .. " is still available with plugins disabled")
+    end
+  end
+
+  if rawget(_G, "Snacks") ~= nil then
+    fail("Snacks is still loaded with plugins disabled")
+  end
+
+  local disabled_plugins = { "snacks", "goto-preview", "conform", "lint" }
+  for _, plugin in ipairs(disabled_plugins) do
+    if pcall(require, plugin) then
+      fail(plugin .. " is still installed with no plugins or languages enabled")
+    end
+  end
+
+  if vim.opt.tabstop:get() ~= 2 then
+    fail("editor options were not applied with plugins disabled")
+  end
+
+  return
 end
 
 local lsp_attached = vim.wait(10000, function()
@@ -66,5 +93,40 @@ end
 for _, mapping in ipairs({ "pd", "pt", "pi", "pD", "pr", "pc" }) do
   if vim.fn.maparg("<leader>" .. mapping, "n") == "" then
     fail("<leader>" .. mapping .. " is not mapped")
+  end
+end
+
+local conform = require("conform")
+if vim.fn.executable(conform.formatters.alejandra.command) ~= 1 then
+  fail("the configured Nix formatter command is not executable")
+end
+
+vim.cmd("enew")
+vim.api.nvim_buf_set_lines(0, 0, -1, false, { "{a=1;}" })
+vim.bo.filetype = "nix"
+
+local format_error
+conform.format({ bufnr = 0, async = false, lsp_format = "never" }, function(err)
+  format_error = err
+end)
+
+if format_error then
+  fail("conform failed to format a Nix buffer: " .. format_error)
+end
+
+local formatted = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
+if not formatted:find("a = 1", 1, true) then
+  fail("the Nix formatter did not run: " .. formatted)
+end
+
+local lint = require("lint")
+local nix_linters = lint.linters_by_ft.nix or {}
+if #nix_linters == 0 then
+  fail("nvim-lint has no Nix linters configured")
+end
+
+for _, name in ipairs(nix_linters) do
+  if lint.linters[name] == nil then
+    fail("nvim-lint is missing the " .. name .. " linter")
   end
 end
