@@ -100,7 +100,7 @@ The overlay builds against the consumer's nixpkgs and also exposes
 - Continuous reload of changed files and an auto-refreshing file tree
 - Configurable Nix, Lua, TypeScript, Python, Go, Rust, and configuration languages
 - Snacks picker, Neo-tree, Oil, GrugFar, Diffview, Gitsigns, and Harpoon
-- Kanagawa themes with transparent background support
+- Kanagawa, Catppuccin, and Sora colorschemes with transparent background support
 - Reproducible `git`, `ripgrep`, and `fd` runtime tools
 - Reproducible Wayland and X11 clipboard providers on Linux
 - Headless runtime and Home Manager integration checks

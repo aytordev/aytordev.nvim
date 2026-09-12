@@ -9,6 +9,17 @@ if vim.v.errmsg ~= "" then
   fail("Neovim startup failed: " .. vim.v.errmsg)
 end
 
+-- Theme-only profile: assert the requested colorscheme actually loaded. Runs
+-- before the tool/LSP checks so a lean package only needs the theme.
+if profile == "theme" then
+  local expected = vim.env.AYTORDEV_COLORSCHEME
+  if vim.g.colors_name ~= expected then
+    fail("colorscheme is '" .. tostring(vim.g.colors_name) .. "', expected '" .. tostring(expected) .. "'")
+  end
+
+  return
+end
+
 for _, command in ipairs({ "git", "rg", "fd" }) do
   if vim.fn.executable(command) ~= 1 then
     fail(command .. " is unavailable")

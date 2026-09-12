@@ -92,6 +92,48 @@
       )
     ];
 
+    catppuccinHome = mkHome [
+      (
+        base
+        // {
+          aytordev =
+            base.aytordev
+            // {
+              colorscheme = "catppuccin";
+              style = "mocha";
+            };
+        }
+      )
+    ];
+
+    soraHome = mkHome [
+      (
+        base
+        // {
+          aytordev =
+            base.aytordev
+            // {
+              colorscheme = "sora";
+              style = "dark";
+            };
+        }
+      )
+    ];
+
+    invalidSoraStyleHome = mkHome [
+      (
+        base
+        // {
+          aytordev =
+            base.aytordev
+            // {
+              colorscheme = "sora";
+              style = "wave";
+            };
+        }
+      )
+    ];
+
     vimOf = home: home.config.programs.nvf.settings.vim;
 
     defaultsVim = vimOf defaultsHome;
@@ -100,6 +142,8 @@
     clipboardNoneVim = vimOf clipboardNoneHome;
     nestedOverrideVim = vimOf nestedOverrideHome;
     gotoPreviewNoSnacksVim = vimOf gotoPreviewNoSnacksHome;
+    catppuccinVim = vimOf catppuccinHome;
+    soraVim = vimOf soraHome;
 
     keymapped = vim: key: builtins.any (mapping: mapping.key == key) vim.keymaps;
 
@@ -183,6 +227,27 @@
       {
         assertion = keymapped gotoPreviewNoSnacksVim "<leader>pd";
         message = "goto-preview definition mapping disappeared without snacks";
+      }
+      {
+        assertion = catppuccinVim.extraPlugins ? catppuccin && !(catppuccinVim.extraPlugins ? kanagawa);
+        message = "colorscheme = catppuccin did not select the catppuccin plugin";
+      }
+      {
+        assertion = pkgs.lib.hasInfix "colorscheme catppuccin-mocha" catppuccinVim.extraPlugins.catppuccin.setup;
+        message = "catppuccin did not select the requested flavour";
+      }
+      {
+        assertion = soraVim.extraPlugins ? sora && !(soraVim.extraPlugins ? kanagawa);
+        message = "colorscheme = sora did not select the sora plugin";
+      }
+      {
+        assertion = pkgs.lib.hasInfix "colorscheme sora" soraVim.extraPlugins.sora.setup;
+        message = "sora did not load the colorscheme";
+      }
+      {
+        assertion =
+          !(builtins.tryEval (builtins.deepSeq (vimOf invalidSoraStyleHome).extraPlugins true)).success;
+        message = "an invalid style for sora was not rejected";
       }
     ];
     assertionsPass =

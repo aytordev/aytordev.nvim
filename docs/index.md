@@ -18,8 +18,8 @@ namespace.
 | `aytordev.languages` | list | All supported | Enabled languages. |
 | `aytordev.format` | boolean | `true` | Per-language formatters and format on save. |
 | `aytordev.extraDiagnostics` | boolean | `true` | Per-language linters and extra diagnostics. |
-| `aytordev.colorscheme` | enum | `"kanagawa"` | Colorscheme. |
-| `aytordev.style` | enum | `"wave"` | Colorscheme style. |
+| `aytordev.colorscheme` | enum | `"kanagawa"` | Colorscheme family: `kanagawa`, `catppuccin`, `sora`, or `none`. |
+| `aytordev.style` | enum | `"wave"` | Variant of the selected colorscheme family. |
 | `aytordev.transparent` | boolean | `false` | Transparent background. |
 | `aytordev.plugins.<name>` | boolean | `true` | Enable an individual plugin module. |
 
@@ -28,9 +28,11 @@ includes the selected `wl-copy`, `xclip`, or `xsel` providers; no host-installed
 provider is required. Selecting `none` disables clipboard integration and its
 providers.
 
-Colorscheme accepts `kanagawa` or `none`. The supported Kanagawa styles are
-`wave`, `dragon`, and `lotus`; `style` and `transparent` only affect Kanagawa.
-The editor uses the native clipboard provider available on macOS.
+Colorscheme accepts `kanagawa`, `catppuccin`, `sora`, or `none`. Valid styles
+depend on the family: `wave`/`dragon`/`lotus` for Kanagawa,
+`latte`/`frappe`/`macchiato`/`mocha` for Catppuccin, and `dark` for Sora.
+`transparent` applies to all three families. The editor uses the native
+clipboard provider available on macOS.
 
 ## Configuration Contract
 
@@ -119,6 +121,7 @@ default and exposed under `aytordev.plugins`. Available names are:
 <!-- plugin-list:start -->
 - `autopairs`
 - `blink-cmp`
+- `catppuccin`
 - `diffview`
 - `dropbar`
 - `flash`
@@ -136,6 +139,7 @@ default and exposed under `aytordev.plugins`. Available names are:
 - `noice`
 - `oil`
 - `snacks`
+- `sora`
 - `surround`
 - `todo-comments`
 - `treesitter`
