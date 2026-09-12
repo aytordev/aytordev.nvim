@@ -38,6 +38,10 @@ in {
     profiles = import ./profiles.nix;
   };
 
+  # Public builder so consumers can bake a colorscheme (or other overrides)
+  # without importing the full Home Manager option tree.
+  flake.lib.mkAytordevNeovim = mkAytordevNeovim;
+
   imports = [
     inputs.treefmt-nix.flakeModule
     ./packages
