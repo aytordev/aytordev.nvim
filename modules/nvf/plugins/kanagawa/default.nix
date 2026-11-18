@@ -7,21 +7,30 @@
   pkgs,
   lib,
   ...
-}: {
-  vim.extraPlugins = lib.mkIf (config.aytordev.colorscheme == "kanagawa") {
-    kanagawa = {
-      package = pkgs.vimPlugins.kanagawa-nvim;
-      setup = ''
-        require('kanagawa').setup({
-          transparent = ${lib.boolToString config.aytordev.transparent},
-          theme = "${config.aytordev.style}",
-          background = {
-            dark = "wave",
-            light = "lotus",
-          },
-        })
-        vim.cmd("colorscheme kanagawa-${config.aytordev.style}")
-      '';
-    };
-  };
+}: let
+  styles = [
+    "wave"
+    "dragon"
+    "lotus"
+  ];
+in {
+  vim.extraPlugins = lib.mkIf (config.aytordev.colorscheme == "kanagawa") (
+    assert lib.assertMsg (builtins.elem config.aytordev.style styles)
+    "aytordev.nvim: colorscheme 'kanagawa' requires style to be one of [${lib.concatStringsSep " " styles}], got '${config.aytordev.style}'"; {
+      kanagawa = {
+        package = pkgs.vimPlugins.kanagawa-nvim;
+        setup = ''
+          require('kanagawa').setup({
+            transparent = ${lib.boolToString config.aytordev.transparent},
+            theme = "${config.aytordev.style}",
+            background = {
+              dark = "wave",
+              light = "lotus",
+            },
+          })
+          vim.cmd("colorscheme kanagawa-${config.aytordev.style}")
+        '';
+      };
+    }
+  );
 }

@@ -3,6 +3,7 @@
 {
   inputs,
   self,
+  profiles,
   ...
 }: {
   perSystem = {pkgs, ...}: let
@@ -23,10 +24,21 @@
           ++ extraModules;
       };
 
-    selectedLanguages = [
-      "nix"
-      "lua"
-    ];
+    selectedLanguages = profiles.core.languages;
+
+    coreConfig =
+      (inputs.nvf.lib.neovimConfiguration {
+        inherit pkgs;
+        modules = [
+          ../../../modules/nvf
+          {aytordev.languages = profiles.core.languages;}
+        ];
+      }).config;
+
+    enabledCoreLanguages = builtins.attrNames (pkgs.lib.filterAttrs (
+        _: language: builtins.isAttrs language && language ? enable && language.enable
+      )
+      coreConfig.vim.languages);
 
     base = {
       aytordev.languages = selectedLanguages;
@@ -133,6 +145,17 @@
         }
       )
     ];
+
+    kanagawaHome = style:
+      mkHome [
+        {
+          aytordev = {
+            languages = selectedLanguages;
+            colorscheme = "kanagawa";
+            inherit style;
+          };
+        }
+      ];
 
     vimOf = home: home.config.programs.nvf.settings.vim;
 
@@ -256,9 +279,45 @@
       )
       assertions;
   in {
-    checks.contracts = assert assertionsPass;
-      pkgs.runCommand "aytordev-nvim-contracts-check" {} ''
-        touch "$out"
-      '';
+    checks = {
+      contracts = assert assertionsPass;
+        pkgs.runCommand "aytordev-nvim-contracts-check" {} ''
+          touch "$out"
+        '';
+
+      theme-defaults = assert pkgs.lib.assertMsg (
+        defaultsHome.config.aytordev.colorscheme
+        == "sora"
+        && defaultsHome.config.aytordev.style == "dark"
+        && defaultsVim.extraPlugins ? sora
+        && !(defaultsVim.extraPlugins ? kanagawa)
+        && pkgs.lib.hasInfix "colorscheme sora" defaultsVim.extraPlugins.sora.setup
+        && coreConfig.aytordev.colorscheme == "sora"
+        && coreConfig.aytordev.style == "dark"
+        && coreConfig.vim.extraPlugins ? sora
+      ) "aytordev.nvim: Home Manager and standalone packages must default to Sora dark";
+        pkgs.runCommand "aytordev-nvim-theme-defaults-check" {} ''
+          touch "$out"
+        '';
+
+      theme-styles = assert pkgs.lib.assertMsg (
+        builtins.all (
+          style: pkgs.lib.hasInfix "colorscheme kanagawa-${style}" (vimOf (kanagawaHome style)).extraPlugins.kanagawa.setup
+        ) ["wave" "dragon" "lotus"]
+        && builtins.all (
+          style: !(builtins.tryEval (builtins.deepSeq (vimOf (kanagawaHome style)).extraPlugins.kanagawa.setup true)).success
+        ) ["mocha" "dark"]
+      ) "aytordev.nvim: Kanagawa must accept its own styles and reject other families";
+        pkgs.runCommand "aytordev-nvim-theme-styles-check" {} ''
+          touch "$out"
+        '';
+
+      core-languages = assert pkgs.lib.assertMsg (
+        enabledCoreLanguages == ["lua" "nix"]
+      ) "aytordev.nvim: core must enable exactly Lua and Nix, got ${pkgs.lib.concatStringsSep ", " enabledCoreLanguages}";
+        pkgs.runCommand "aytordev-nvim-core-languages-check" {} ''
+          touch "$out"
+        '';
+    };
   };
 }

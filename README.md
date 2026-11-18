@@ -4,8 +4,10 @@ A reproducible Neovim distribution built with [Nix](https://nixos.org/) and
 [nvf](https://github.com/NotAShelf/nvf).
 
 The flake provides a ready-to-run package and a Home Manager module with a
-small `aytordev.*` configuration API. Plugins, language servers, formatters,
-and command-line dependencies are pinned in `flake.lock`.
+small `aytordev.*` configuration API, with Sora dark as the default theme.
+Language servers, formatters, command-line dependencies, and most plugins are
+pinned through `flake.lock`. Sora is pinned separately by revision and content
+hash in `modules/nvf/plugins/sora/default.nix`.
 
 ## Quick Start
 
@@ -47,7 +49,8 @@ Import the module from your Home Manager configuration:
     tabWidth = 2;
     clipboard = "unnamedplus";
     languages = ["nix" "lua" "rust"];
-    style = "wave";
+    colorscheme = "sora";
+    style = "dark";
     transparent = false;
   };
 }

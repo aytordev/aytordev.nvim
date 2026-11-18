@@ -7,7 +7,7 @@
         "sora"
         "none"
       ];
-      default = "kanagawa";
+      default = "sora";
       description = "The colorscheme family to use.";
     };
 
@@ -25,7 +25,7 @@
         # Sora (dark-only)
         "dark"
       ];
-      default = "wave";
+      default = "dark";
       description = ''
         The variant of the selected colorscheme family. Valid values depend on
         `aytordev.colorscheme`:

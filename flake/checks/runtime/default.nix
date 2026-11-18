@@ -27,6 +27,7 @@
         export XDG_CACHE_HOME="$TMPDIR/cache"
         export XDG_STATE_HOME="$TMPDIR/state"
         export AYTORDEV_PROFILE=${profile}
+        ${lib.optionalString (profile != "minimal") "export AYTORDEV_COLORSCHEME=sora"}
         export PATH="${
           lib.makeBinPath [
             pkgs.bash
@@ -88,6 +89,7 @@
       runtime = mkRuntimeCheck "default" "full" config.packages.default;
       runtime-core = mkRuntimeCheck "core" "full" config.packages.core;
       runtime-minimal = mkRuntimeCheck "minimal" "minimal" minimalPackage;
+      theme-kanagawa = mkThemeCheck "kanagawa" "kanagawa" "wave" "kanagawa";
       theme-catppuccin = mkThemeCheck "catppuccin" "catppuccin" "mocha" "catppuccin-mocha";
       theme-sora = mkThemeCheck "sora" "sora" "dark" "sora";
     };
