@@ -9,14 +9,14 @@ if vim.v.errmsg ~= "" then
   fail("Neovim startup failed: " .. vim.v.errmsg)
 end
 
--- Theme-only profile: assert the requested colorscheme actually loaded. Runs
--- before the tool/LSP checks so a lean package only needs the theme.
-if profile == "theme" then
-  local expected = vim.env.AYTORDEV_COLORSCHEME
-  if vim.g.colors_name ~= expected then
-    fail("colorscheme is '" .. tostring(vim.g.colors_name) .. "', expected '" .. tostring(expected) .. "'")
-  end
+-- Check the default theme as well as isolated theme-only packages.
+-- Minimal packages intentionally do not select a colorscheme.
+local expected = vim.env.AYTORDEV_COLORSCHEME
+if expected and vim.g.colors_name ~= expected then
+  fail("colorscheme is '" .. tostring(vim.g.colors_name) .. "', expected '" .. tostring(expected) .. "'")
+end
 
+if profile == "theme" then
   return
 end
 

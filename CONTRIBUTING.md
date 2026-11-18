@@ -89,6 +89,13 @@ GitHub App token instead of the default `GITHUB_TOKEN`. Configure it once:
 
 Keep `flake.lock` updates separate from unrelated changes.
 
+Sora is an exception: its source revision (`rev`) and content hash (`hash`) are
+pinned in `modules/nvf/plugins/sora/default.nix`, not in `flake.lock`. The
+scheduled lock-file workflow does not update it. To update Sora, change both
+values in that module, then run `just check` and
+`nix flake check --all-systems --no-build`. The `theme-sora`, `runtime`, and
+`runtime-core` checks verify that the colorscheme loads.
+
 ## Commit Messages
 
 Use Conventional Commits prefixed with a Gitmoji code:
