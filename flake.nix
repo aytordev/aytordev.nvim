@@ -14,6 +14,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Sora is a non-flake source input: the weekly lock update refreshes it, and
+    # the plugin module derives its source from the lock so flake and raw-module
+    # consumers stay in sync.
+    sora = {
+      url = "github:Aejkatappaja/sora";
+      flake = false;
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

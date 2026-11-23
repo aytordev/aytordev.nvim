@@ -115,7 +115,24 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nvf": "nvf",
+        "sora": "sora",
         "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "sora": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787091119,
+        "narHash": "sha256-uMfo36xLYMdafru4/eRE3o+MkuNVY1b+lPo+Ky4r3u8=",
+        "owner": "Aejkatappaja",
+        "repo": "sora",
+        "rev": "504df4913c55dd9ad658e331b172f86b0537b439",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Aejkatappaja",
+        "repo": "sora",
+        "type": "github"
       }
     },
     "treefmt-nix": {

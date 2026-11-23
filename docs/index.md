@@ -176,6 +176,40 @@ review whether a newly added plugin should be enabled by default.
 - Neo-tree watches the filesystem, so files created, renamed, or deleted
   outside Neovim appear in the tree without a manual refresh.
 
+The one-second poll was benchmarked against the audit's concern that polling
+could grow expensive as more buffers are loaded. `scripts/bench-reload.lua`
+replaces the shipped watcher with an instrumented timer running the identical
+callback at the identical cadence, and measures the wall time of each real
+tick from the timer firing to the completion of the scheduled callback body
+(schedule dispatch plus the `silent checktime` poll work) with few and many
+actually-loaded buffers in temporary fixtures. It also verifies that external
+direct writes and atomic renames reload unmodified buffers while unsaved edits
+survive an external change to their file (checked against the disk text, the
+buffer text, and the modified flag), and exits non-zero on any failure.
+Measured locally, the median tick cost was about 35–95µs with 5 and with 205
+loaded buffers, with the worst observed tick under 0.2ms (less than 0.02% of
+the one-second interval), so polling is retained. To reproduce with a current
+build:
+
+```bash
+nix run .#default -- --headless "+luafile scripts/bench-reload.lua" "+qa"
+```
+
+The script must run under the packaged Neovim so the distribution watcher is
+active; under a plain Neovim the reload verifications fail by design.
+
+The measurement itself is calibrated with `scripts/bench-reload-calibration.lua`,
+which injects 12ms of busy work inside the measured command of every tick (never
+before the callback or after the measurement). The benchmark's public report
+must detect the injected cost — the median jumps to about 12ms and the report
+reclassifies the poll cost as material — and exits non-zero if the measurement
+misses it. Without the timer-boundary fix this calibration run fails, so it
+doubles as a regression test for the measurement itself:
+
+```bash
+nix run .#default -- --headless "+luafile scripts/bench-reload-calibration.lua" "+qa"
+```
+
 ## Keymaps
 
 The leader and local leader keys are both `Space`.
