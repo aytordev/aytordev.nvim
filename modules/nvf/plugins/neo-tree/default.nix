@@ -8,6 +8,7 @@
   vim.filetree.neo-tree = {
     enable = lib.mkDefault true;
     setupOpts = {
+      git_status_async = lib.mkDefault true;
       window = {
         position = lib.mkDefault "right";
         width = lib.mkDefault 30;
